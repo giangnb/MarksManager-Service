@@ -158,7 +158,7 @@
                     </tr>
                     <%@ page import="java.util.*" %>
                     <%
-                        ArrayList<String> mainPageProps = new ArrayList<>();
+                        ArrayList<String> mainPageProps = new ArrayList<String>();
                         mainPageProps.add("java.version");
                         mainPageProps.add("java.vendor");
                         mainPageProps.add("os.arch");

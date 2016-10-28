@@ -68,3 +68,4 @@ nbproject/*
 nbproject
 /dist/
 /build/
+/src/conf/persistence.xml.txt
