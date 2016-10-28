@@ -9,7 +9,6 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -32,20 +31,17 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Student.findAll", query = "SELECT s FROM Student s"),
     @NamedQuery(name = "Student.findById", query = "SELECT s FROM Student s WHERE s.id = :id"),
     @NamedQuery(name = "Student.findByClass", query = "SELECT s FROM Student s WHERE s.classId.id = :classId"),
-    @NamedQuery(name = "Student.findByName", query = "SELECT s FROM Student s WHERE s.name CONTAINS :name"),
+    @NamedQuery(name = "Student.findByName", query = "SELECT s FROM Student s WHERE s.name LIKE :name"),
     @NamedQuery(name = "Student.findByInfo", query = "SELECT s FROM Student s WHERE s.info = :info")})
 public class Student implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @Column(name = "name")
     private String name;
     @Basic(optional = false)
-    @Column(name = "info")
     private String info;
     @JoinColumn(name = "classId", referencedColumnName = "id")
     @ManyToOne(optional = false)

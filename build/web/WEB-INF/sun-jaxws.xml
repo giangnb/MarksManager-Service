@@ -1,7 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <endpoints version="2.0" xmlns="http://java.sun.com/xml/ns/jax-ws/ri/runtime">
-  <endpoint implementation="com.marksmana.ws.StudentsService" name="StudentsService" url-pattern="/StudentsService"/>
-  <endpoint implementation="com.marksmana.ws.ClassesService" name="ClassesService" url-pattern="/ClassesService"/>
-  <endpoint implementation="com.marksmana.ws.ScoresService" name="ScoresService" url-pattern="/ScoresService"/>
-  <endpoint implementation="com.marksmana.ws.SchoolService" name="SchoolService" url-pattern="/SchoolService"/>
+  <endpoint implementation="com.marksmana.ws.ApplicationWebService" name="ApplicationWebService" url-pattern="/ApplicationWebService"/>
 </endpoints>

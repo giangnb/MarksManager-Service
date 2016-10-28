@@ -9,7 +9,6 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -32,7 +31,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Subject.findAll", query = "SELECT s FROM Subject s"),
     @NamedQuery(name = "Subject.findById", query = "SELECT s FROM Subject s WHERE s.id = :id"),
-    @NamedQuery(name = "Subject.findByTacher", query = "SELECT s FROM Subject s WHERE s.teacherList.id = :teacherId"),
+    //@NamedQuery(name = "Subject.findByTeacher", query = "SELECT s FROM Subject s WHERE s.teacherList.id = :teacherId"),
+    //@NamedQuery(name = "Subject.findByBulk", query = "SELECT s FROM Subject s WHERE s.bulkList.id = :bulkId"),
     @NamedQuery(name = "Subject.findByName", query = "SELECT s FROM Subject s WHERE s.name = :name"),
     @NamedQuery(name = "Subject.findByInfo", query = "SELECT s FROM Subject s WHERE s.info = :info")})
 public class Subject implements Serializable {
@@ -40,13 +40,10 @@ public class Subject implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @Column(name = "name")
     private String name;
     @Basic(optional = false)
-    @Column(name = "info")
     private String info;
     @JoinTable(name = "t_teacher_subject", joinColumns = {
         @JoinColumn(name = "subjectId", referencedColumnName = "id")}, inverseJoinColumns = {

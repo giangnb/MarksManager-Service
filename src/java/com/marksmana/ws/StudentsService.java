@@ -17,9 +17,10 @@ import javax.persistence.Persistence;
  * For managing Student
  * @author Giang
  */
-@WebService(serviceName = "StudentsService")
+//@WebService(serviceName = "StudentsService")
 public class StudentsService {
 
+    // <editor-fold defaultstate="collapsed" desc="Student Management"> 
     @WebMethod(operationName = "getStudent")
     public List<Student> getStudents() {
         EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
@@ -109,5 +110,6 @@ public class StudentsService {
         }
         return 1;
     }
+    // </editor-fold>
 
 }

@@ -11,6 +11,7 @@
     <class>com.marksmana.entities.Properties</class>
     <class>com.marksmana.entities.AdminAccount</class>
     <class>com.marksmana.entities.Teacher</class>
+    <class>com.marksmana.entities.Admin</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://localhost:1433;databaseName=KMA_QLDiem"/>

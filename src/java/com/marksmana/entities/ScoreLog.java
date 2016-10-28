@@ -27,17 +27,22 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "ScoreLog.findAll", query = "SELECT s FROM ScoreLog s"),
     @NamedQuery(name = "ScoreLog.findById", query = "SELECT s FROM ScoreLog s WHERE s.id = :id"),
-    @NamedQuery(name = "ScoreLog.findByScores", query = "SELECT s FROM ScoreLog s WHERE s.scores = :scores")})
+    @NamedQuery(name = "ScoreLog.findByScores", query = "SELECT s FROM ScoreLog s WHERE s.scores = :scores"),
+    @NamedQuery(name = "ScoreLog.findByRemarks", query = "SELECT s FROM ScoreLog s WHERE s.remarks = :remarks"),
+    @NamedQuery(name = "ScoreLog.findBySchoolYear", query = "SELECT s FROM ScoreLog s WHERE s.schoolYear = :schoolYear")})
 public class ScoreLog implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "id")
     private Long id;
     @Basic(optional = false)
-    @Column(name = "scores")
     private String scores;
+    @Basic(optional = false)
+    private String remarks;
+    @Basic(optional = false)
+    @Column(name = "school_year")
+    private String schoolYear;
     @JoinColumn(name = "studentId", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Student studentId;
@@ -49,9 +54,11 @@ public class ScoreLog implements Serializable {
         this.id = id;
     }
 
-    public ScoreLog(Long id, String scores) {
+    public ScoreLog(Long id, String scores, String remarks, String schoolYear) {
         this.id = id;
         this.scores = scores;
+        this.remarks = remarks;
+        this.schoolYear = schoolYear;
     }
 
     public Long getId() {
@@ -68,6 +75,22 @@ public class ScoreLog implements Serializable {
 
     public void setScores(String scores) {
         this.scores = scores;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
+
+    public String getSchoolYear() {
+        return schoolYear;
+    }
+
+    public void setSchoolYear(String schoolYear) {
+        this.schoolYear = schoolYear;
     }
 
     public Student getStudentId() {

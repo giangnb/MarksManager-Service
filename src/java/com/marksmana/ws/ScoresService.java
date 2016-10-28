@@ -5,10 +5,12 @@
  */
 package com.marksmana.ws;
 
+import com.marksmana.entities.Properties;
 import com.marksmana.entities.Score;
 import com.marksmana.entities.ScoreLog;
 import com.marksmana.entities.Student;
 import com.marksmana.utils.Json;
+import com.marksmana.utils.scorerecords.ScoresRecordValue;
 import java.util.ArrayList;
 import java.util.List;
 import javax.jws.WebService;
@@ -22,7 +24,7 @@ import javax.persistence.Persistence;
  * For managing Score and ScoreLog
  * @author Giang
  */
-@WebService(serviceName = "ScoresService")
+//@WebService(serviceName = "ScoresService")
 public class ScoresService {
 
     // <editor-fold defaultstate="collapsed" desc="Scores Managing"> 
@@ -98,6 +100,7 @@ public class ScoresService {
     }
     // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="Scores Archiving"> 
     @WebMethod(operationName = "archiveToLog")
     public void archiveToLog(@WebParam(name = "classId") int id) {
         EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
@@ -105,12 +108,16 @@ public class ScoresService {
                 .setParameter("classId", id).getResultList();
         EntityTransaction trans = em.getTransaction();
         for (Student s : list) {
-            trans.begin();
+            ScoresRecordValue recordVal = null;
             
+            trans.begin();
             try {
                 // Add to ScoreLog
-                String json = Json.SerializeObject(s);
+                //Old:String json = Json.SerializeObject(s);
+                recordVal = new ScoresRecordValue();
+                String json = recordVal.addScoresList(s.getScoreList());
                 ScoreLog log = new ScoreLog();
+                log.setSchoolYear(em.find(Properties.class, "school_year").getValue());
                 log.setScores(json);
                 log.setStudentId(s);
                 em.persist(log);
@@ -127,5 +134,6 @@ public class ScoresService {
             }
         }
     }
+    // </editor-fold>
 
 }

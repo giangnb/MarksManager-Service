@@ -18,9 +18,10 @@ import javax.persistence.Persistence;
  * For managing Classes and Bulk
  * @author Giang
  */
-@WebService(serviceName = "ClassesService")
+//@WebService(serviceName = "ClassesService")
 public class ClassesService {
 
+    // <editor-fold defaultstate="collapsed" desc="Classes Managing"> 
     @WebMethod(operationName = "getClasses")
     public List<Clazz> getClasses() {
         EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
@@ -87,6 +88,7 @@ public class ClassesService {
         }
         em.getTransaction().begin();
         try {
+            cla.getStudentList().clear();
             em.detach(cla);
             em.getTransaction().commit();
         } catch (Exception e) {
@@ -95,7 +97,9 @@ public class ClassesService {
         }
         return 1;
     }
+    // </editor-fold>
     
+    // <editor-fold defaultstate="collapsed" desc="Bulks Managing"> 
     @WebMethod(operationName = "getBulks")
     public List<Bulk> getBulks() {
         EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
@@ -161,6 +165,8 @@ public class ClassesService {
         }
         em.getTransaction().begin();
         try {
+            bu.getClazzList().clear();
+            bu.getSubjectList().clear();
             em.detach(bu);
             em.getTransaction().commit();
         } catch (Exception e) {
@@ -169,5 +175,6 @@ public class ClassesService {
         }
         return 1;
     }
+    // </editor-fold>
     
 }

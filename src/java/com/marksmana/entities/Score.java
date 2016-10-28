@@ -7,7 +7,6 @@ package com.marksmana.entities;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -28,21 +27,17 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Score.findAll", query = "SELECT s FROM Score s"),
     @NamedQuery(name = "Score.findById", query = "SELECT s FROM Score s WHERE s.id = :id"),
     @NamedQuery(name = "Score.findByStudent", query = "SELECT s FROM Score s WHERE s.studentId.id = :studentId"),
-    @NamedQuery(name = "Score.findBySubject", query = "SELECT s FROM Score s WHERE s.subjectId.id = :subjectId"),
-    @NamedQuery(name = "Score.findByClass", query = "SELECT s FROM Score s WHERE s.studentId.classId.id = :classId"),
-    @NamedQuery(name = "Score.findByScore", query = "SELECT s FROM Score s WHERE s.score = :score")})
+    @NamedQuery(name = "Score.findByScore", query = "SELECT s FROM Score s WHERE s.score = :score"),
+    @NamedQuery(name = "Score.findByCoefficient", query = "SELECT s FROM Score s WHERE s.coefficient = :coefficient")})
 public class Score implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "id")
     private Long id;
     @Basic(optional = false)
-    @Column(name = "score")
     private double score;
     @Basic(optional = false)
-    @Column(name = "coefficient")
     private short coefficient;
     @JoinColumn(name = "studentId", referencedColumnName = "id")
     @ManyToOne(optional = false)

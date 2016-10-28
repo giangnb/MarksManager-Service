@@ -24,24 +24,21 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "t_admin")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "AdminAccount.findAll", query = "SELECT a FROM AdminAccount a"),
-    @NamedQuery(name = "AdminAccount.findById", query = "SELECT a FROM AdminAccount a WHERE a.id = :id"),
-    @NamedQuery(name = "AdminAccount.findByPass", query = "SELECT a FROM AdminAccount a WHERE a.pass = :pass"),
-    @NamedQuery(name = "AdminAccount.findByLastLogin", query = "SELECT a FROM AdminAccount a WHERE a.lastLogin = :lastLogin"),
-    @NamedQuery(name = "AdminAccount.findByLastChange", query = "SELECT a FROM AdminAccount a WHERE a.lastChange = :lastChange")})
-public class AdminAccount implements Serializable {
+    @NamedQuery(name = "Admin.findAll", query = "SELECT a FROM Admin a"),
+    @NamedQuery(name = "Admin.findById", query = "SELECT a FROM Admin a WHERE a.id = :id"),
+    @NamedQuery(name = "Admin.findByPass", query = "SELECT a FROM Admin a WHERE a.pass = :pass"),
+    @NamedQuery(name = "Admin.findByLastLogin", query = "SELECT a FROM Admin a WHERE a.lastLogin = :lastLogin"),
+    @NamedQuery(name = "Admin.findByLastChange", query = "SELECT a FROM Admin a WHERE a.lastChange = :lastChange")})
+public class Admin implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "id")
     private String id;
     @Basic(optional = false)
-    @Column(name = "pass")
     private String pass;
     @Basic(optional = false)
     @Lob
-    @Column(name = "prohibited")
     private String prohibited;
     @Basic(optional = false)
     @Column(name = "last_login")
@@ -50,14 +47,14 @@ public class AdminAccount implements Serializable {
     @Column(name = "last_change")
     private long lastChange;
 
-    public AdminAccount() {
+    public Admin() {
     }
 
-    public AdminAccount(String id) {
+    public Admin(String id) {
         this.id = id;
     }
 
-    public AdminAccount(String id, String pass, String prohibited, long lastLogin, long lastChange) {
+    public Admin(String id, String pass, String prohibited, long lastLogin, long lastChange) {
         this.id = id;
         this.pass = pass;
         this.prohibited = prohibited;
@@ -115,10 +112,10 @@ public class AdminAccount implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof AdminAccount)) {
+        if (!(object instanceof Admin)) {
             return false;
         }
-        AdminAccount other = (AdminAccount) object;
+        Admin other = (Admin) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -127,7 +124,7 @@ public class AdminAccount implements Serializable {
 
     @Override
     public String toString() {
-        return "com.marksmana.entities.AdminAccount[ id=" + id + " ]";
+        return "com.marksmana.entities.Admin[ id=" + id + " ]";
     }
     
 }

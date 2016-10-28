@@ -9,7 +9,6 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
@@ -30,7 +29,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Teacher.findAll", query = "SELECT t FROM Teacher t"),
     @NamedQuery(name = "Teacher.findById", query = "SELECT t FROM Teacher t WHERE t.id = :id"),
-    @NamedQuery(name = "Teacher.findByUsername", query = "SELECT t FROM Teacher t WHERE t.username = :username"),
+    @NamedQuery(name = "Teacher.login", query = "SELECT t FROM Teacher t WHERE t.username = :user AND t.pass = :pass"),
+    @NamedQuery(name = "Teacher.findByUsername", query = "SELECT t FROM Teacher t WHERE t.username = :user"),
     @NamedQuery(name = "Teacher.findByPass", query = "SELECT t FROM Teacher t WHERE t.pass = :pass"),
     @NamedQuery(name = "Teacher.findByName", query = "SELECT t FROM Teacher t WHERE t.name = :name"),
     @NamedQuery(name = "Teacher.findByInfo", query = "SELECT t FROM Teacher t WHERE t.info = :info")})
@@ -39,17 +39,12 @@ public class Teacher implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "id")
     private Integer id;
-    @Column(name = "username")
     private String username;
-    @Column(name = "pass")
     private String pass;
     @Basic(optional = false)
-    @Column(name = "name")
     private String name;
     @Basic(optional = false)
-    @Column(name = "info")
     private String info;
     @ManyToMany(mappedBy = "teacherList")
     private List<Subject> subjectList;
