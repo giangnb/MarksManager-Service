@@ -15,9 +15,9 @@
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://localhost:1433;databaseName=KMA_QLDiem"/>
-      <property name="javax.persistence.jdbc.user" value="sa"/>
+      <property name="javax.persistence.jdbc.user" value="dbuser_kma_qldiem"/>
       <property name="javax.persistence.jdbc.driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
-      <property name="javax.persistence.jdbc.password" value="giangnb22"/>
+      <property name="javax.persistence.jdbc.password" value="jhdsf7.843fb%jaecbbU8DSTsRsd)zfdree"/>
     </properties>
   </persistence-unit>
 </persistence>
