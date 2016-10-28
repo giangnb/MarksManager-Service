@@ -15,8 +15,6 @@ Java-based WebService (Traditional WS)
 ----------
 
 Web Services:
-1. ClassesService: Classes and Bulks management methods
-2. SchoolService: Teachers and Subject management methods
-3. ScoresService: Scores management and Score logging methods
-4. StudentsService: Students management methods
+- ApplicationWebService: Conatains all methods
+- Servlet path: /ApplicationWebService
 
