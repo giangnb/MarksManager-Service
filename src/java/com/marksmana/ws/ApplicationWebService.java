@@ -117,7 +117,7 @@ public class ApplicationWebService {
         }
         em.getTransaction().begin();
         try {
-            em.detach(stu);
+            em.remove(stu);
             em.getTransaction().commit();
         } catch (Exception e) {
             em.getTransaction().rollback();
@@ -272,7 +272,7 @@ public class ApplicationWebService {
         try {
             sub.getScoreList().clear();
             sub.getTeacherList().clear();
-            em.detach(sub);
+            em.remove(sub);
             
             em.getTransaction().commit();
         } catch (Exception ex) {
@@ -382,7 +382,7 @@ public class ApplicationWebService {
             if (score != null) {
                 trans.begin();
                 try {
-                    em.detach(score);
+                    em.remove(score);
                     trans.commit();
                 } catch (Exception ex) {
                     errors.add(score);
@@ -419,7 +419,7 @@ public class ApplicationWebService {
                 List<Score> score = em.createNamedQuery("Score.findByStudent")
                         .setParameter("studentId", s.getId()).getResultList();
                 for (Score sc : score) {
-                    em.detach(sc);
+                    em.remove(sc);
                 }
                 
                 trans.commit();
@@ -498,7 +498,7 @@ public class ApplicationWebService {
         em.getTransaction().begin();
         try {
             cla.getStudentList().clear();
-            em.detach(cla);
+            em.remove(cla);
             em.getTransaction().commit();
         } catch (Exception e) {
             em.getTransaction().rollback();
@@ -576,7 +576,7 @@ public class ApplicationWebService {
         try {
             bu.getClazzList().clear();
             bu.getSubjectList().clear();
-            em.detach(bu);
+            em.remove(bu);
             em.getTransaction().commit();
         } catch (Exception e) {
             em.getTransaction().rollback();
@@ -701,7 +701,7 @@ public class ApplicationWebService {
         if (isAdminLeft) {
             em.getTransaction().begin();
             try {
-                em.detach(a);
+                em.remove(a);
                 em.getTransaction().commit();
             } catch (Exception ex) {
                 em.getTransaction().rollback();
@@ -777,7 +777,7 @@ public class ApplicationWebService {
         }
         em.getTransaction().begin();
         try {
-            em.detach(p);
+            em.remove(p);
             em.getTransaction().commit();
         } catch (Exception ex) {
             em.getTransaction().rollback();
