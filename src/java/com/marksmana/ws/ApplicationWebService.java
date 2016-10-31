@@ -64,7 +64,7 @@ public class ApplicationWebService {
     }
 
     @WebMethod(operationName = "addStudent")
-    public int addStudent(@WebParam(name = "student")Student s) {
+    public int addStudent(@WebParam(name = "student") Student s) {
         EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
         if (s.getId() != null) {
             if (em.find(Student.class, s.getId()) != null) {
@@ -83,7 +83,7 @@ public class ApplicationWebService {
     }
 
     @WebMethod(operationName = "updateStudent")
-    public int updateStudent(@WebParam(name = "student")Student s) {
+    public int updateStudent(@WebParam(name = "student") Student s) {
         EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
         if (s.getId() == null) {
             return 0;
@@ -99,7 +99,7 @@ public class ApplicationWebService {
             stu.setName(s.getName());
             stu.setScoreList(s.getScoreList());
             stu.setScoreLogList(s.getScoreLogList());
-            
+
             em.getTransaction().commit();
         } catch (Exception e) {
             em.getTransaction().rollback();
@@ -107,9 +107,9 @@ public class ApplicationWebService {
         }
         return 1;
     }
-    
+
     @WebMethod(operationName = "removeStudent")
-    public int removeStudent(@WebParam(name = "id")int id) {
+    public int removeStudent(@WebParam(name = "id") int id) {
         EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
         Student stu = em.find(Student.class, id);
         if (stu == null) {
@@ -126,7 +126,7 @@ public class ApplicationWebService {
         return 1;
     }
     // </editor-fold>
-    
+
     // <editor-fold defaultstate="collapsed" desc="Teachers Managing"> 
     @WebMethod(operationName = "getTeachers")
     public List<Teacher> getTeachers() {
@@ -252,7 +252,7 @@ public class ApplicationWebService {
             sub.setName(s.getName());
             sub.setScoreList(s.getScoreList());
             sub.setTeacherList(s.getTeacherList());
-            
+
             em.getTransaction().commit();
         } catch (Exception ex) {
             em.getTransaction().rollback();
@@ -260,7 +260,7 @@ public class ApplicationWebService {
         }
         return 1;
     }
-    
+
     @WebMethod(operationName = "removeSubject")
     public int removeSubject(@WebParam(name = "subjectId") int id) {
         EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
@@ -273,7 +273,7 @@ public class ApplicationWebService {
             sub.getScoreList().clear();
             sub.getTeacherList().clear();
             em.remove(sub);
-            
+
             em.getTransaction().commit();
         } catch (Exception ex) {
             em.getTransaction().rollback();
@@ -286,6 +286,7 @@ public class ApplicationWebService {
     // <editor-fold defaultstate="collapsed" desc="Teachers Login"> 
     /**
      * Authenticate teacher's account
+     *
      * @param user Teacher's username
      * @param pass Account password
      * @return Teacher account ID
@@ -320,7 +321,7 @@ public class ApplicationWebService {
         return -1;
     }
     // </editor-fold>
-    
+
     // <editor-fold defaultstate="collapsed" desc="Scores Managing"> 
     @WebMethod(operationName = "getScoresBySubject")
     public List<Score> getScoresBySubject(@WebParam(name = "subjectId") int id) {
@@ -403,7 +404,7 @@ public class ApplicationWebService {
         EntityTransaction trans = em.getTransaction();
         for (Student s : list) {
             ScoresRecordValue recordVal = null;
-            
+
             trans.begin();
             try {
                 // Add to ScoreLog
@@ -421,7 +422,7 @@ public class ApplicationWebService {
                 for (Score sc : score) {
                     em.remove(sc);
                 }
-                
+
                 trans.commit();
             } catch (Exception ex) {
                 trans.rollback();
@@ -429,22 +430,22 @@ public class ApplicationWebService {
         }
     }
     // </editor-fold>
-    
+
     // <editor-fold defaultstate="collapsed" desc="Classes Managing"> 
     @WebMethod(operationName = "getClasses")
     public List<Clazz> getClasses() {
         EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
         return em.createNamedQuery("Clazz.findAll").getResultList();
     }
-    
+
     @WebMethod(operationName = "getClassById")
-    public Clazz getClassById(@WebParam(name = "id")int id) {
+    public Clazz getClassById(@WebParam(name = "id") int id) {
         EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
         return em.find(Clazz.class, id);
     }
-    
+
     @WebMethod(operationName = "addClass")
-    public int addClass(@WebParam(name = "class")Clazz c) {
+    public int addClass(@WebParam(name = "class") Clazz c) {
         EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
         if (c.getId() != null) {
             if (em.find(Clazz.class, c.getId()) != null) {
@@ -461,9 +462,9 @@ public class ApplicationWebService {
         }
         return 1;
     }
-    
+
     @WebMethod(operationName = "updateClass")
-    public int updateClass(@WebParam(name = "class")Clazz c) {
+    public int updateClass(@WebParam(name = "class") Clazz c) {
         EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
         if (c.getId() == null) {
             return 0;
@@ -479,7 +480,7 @@ public class ApplicationWebService {
             cla.setName(c.getName());
             cla.setStudentList(c.getStudentList());
             cla.setTeacherId(c.getTeacherId());
-            
+
             em.getTransaction().commit();
         } catch (Exception e) {
             em.getTransaction().rollback();
@@ -487,9 +488,9 @@ public class ApplicationWebService {
         }
         return 1;
     }
-    
+
     @WebMethod(operationName = "removeClass")
-    public int removeClass(@WebParam(name = "id")int id) {
+    public int removeClass(@WebParam(name = "id") int id) {
         EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
         Clazz cla = em.find(Clazz.class, id);
         if (cla == null) {
@@ -507,22 +508,22 @@ public class ApplicationWebService {
         return 1;
     }
     // </editor-fold>
-    
+
     // <editor-fold defaultstate="collapsed" desc="Bulks Managing"> 
     @WebMethod(operationName = "getBulks")
     public List<Bulk> getBulks() {
         EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
         return em.createNamedQuery("Bulk.findAll").getResultList();
     }
-    
+
     @WebMethod(operationName = "getBulkById")
-    public Bulk getBulkById(@WebParam(name = "id")int id) {
+    public Bulk getBulkById(@WebParam(name = "id") int id) {
         EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
         return em.find(Bulk.class, id);
     }
-    
+
     @WebMethod(operationName = "addBulk")
-    public int addBulk(@WebParam(name = "bulk")Bulk b) {
+    public int addBulk(@WebParam(name = "bulk") Bulk b) {
         EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
         if (b.getId() != null) {
             if (em.find(Bulk.class, b.getId()) != null) {
@@ -539,9 +540,9 @@ public class ApplicationWebService {
         }
         return 1;
     }
-    
+
     @WebMethod(operationName = "updateBulk")
-    public int updateBulk(@WebParam(name = "bulk")Bulk b) {
+    public int updateBulk(@WebParam(name = "bulk") Bulk b) {
         EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
         if (b.getId() == null) {
             return 0;
@@ -556,7 +557,7 @@ public class ApplicationWebService {
             bu.setInfo(b.getInfo());
             bu.setName(b.getName());
             bu.setSubjectList(b.getSubjectList());
-            
+
             em.getTransaction().commit();
         } catch (Exception e) {
             em.getTransaction().rollback();
@@ -564,9 +565,9 @@ public class ApplicationWebService {
         }
         return 1;
     }
-    
+
     @WebMethod(operationName = "removeBulk")
-    public int removeBulk(@WebParam(name = "id")int id) {
+    public int removeBulk(@WebParam(name = "id") int id) {
         EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
         Bulk bu = em.find(Bulk.class, id);
         if (bu == null) {
@@ -585,18 +586,25 @@ public class ApplicationWebService {
         return 1;
     }
     // </editor-fold>
-    
+
     // <editor-fold defaultstate="collapsed" desc="Admin Account"> 
     /**
      * Authenticate Administrator's account
-     * @param user Administrator login id 
-     * @param pass Password (raw)
+     *
+     * @param combination Username + "::" + Password
      * @return Admin object
      */
     @WebMethod(operationName = "adminLogin")
-    public Admin adminLogin(@WebParam(name = "user") String user, @WebParam(name = "rawPass") String pass) {
+    public Admin adminLogin(@WebParam(name = "credential") String combination) {
+        String[] cre = combination.split("::", 2);
+        if (cre.length < 2) {
+            return null;
+        }
+        String user = cre[0];
+        String pass = cre[1].replace(":/:", "::");
         EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
-        pass=Encrypt.hash(pass);
+        String storedPass = Encrypt.hash("VNrT" + user + "9Nr9=wes" + pass + "uw7@");
+        System.out.println("User login decdential:\n\t" + user + "\n\t" + pass + "\n\t" + storedPass);
         Admin acc = em.find(Admin.class, user);
         em.getTransaction().begin();
         try {
@@ -605,7 +613,7 @@ public class ApplicationWebService {
         } catch (Exception ex) {
             em.getTransaction().rollback();
         }
-        if (acc.getPass().equals(pass)) {
+        if (acc.getPass().equals(storedPass)) {
             return acc;
         }
         return null;
@@ -613,11 +621,12 @@ public class ApplicationWebService {
 
     /**
      * Get administrator account list
+     *
      * @param acc Current logged in account
      * @return Admin object list | null if account doesn't have permission
      */
     @WebMethod(operationName = "getAdmins")
-    public List<Admin> getAdmins(@WebParam(name = "currentAccount")Admin acc) {
+    public List<Admin> getAdmins(@WebParam(name = "currentAccount") Admin acc) {
         EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
         if (em.find(Admin.class, acc.getId()) == null || acc.getProhibited().contains("account")) {
             return null;
@@ -627,6 +636,7 @@ public class ApplicationWebService {
 
     /**
      * Add new administrator account
+     *
      * @param acc Account object
      * @return 1: success | 0: fail
      */
@@ -637,6 +647,9 @@ public class ApplicationWebService {
         if (a != null) {
             return 0;
         }
+        String rawPass = acc.getPass().replace("::", ":/:");
+        System.out.println(rawPass);
+        acc.setPass(Encrypt.hash("VNrT" + acc.getId() + "9Nr9=wes" + rawPass + "uw7@"));
         em.getTransaction().begin();
         try {
             em.persist(acc);
@@ -650,6 +663,7 @@ public class ApplicationWebService {
 
     /**
      * Edit an administrator account
+     *
      * @param acc Account object
      * @return 1: success | 0: fail
      */
@@ -663,7 +677,8 @@ public class ApplicationWebService {
         em.getTransaction().begin();
         try {
             a.setLastChange(new Date().getTime());
-            a.setPass(acc.getPass());
+            String encPass = acc.getPass().replace("::", ":/:");
+            a.setPass(Encrypt.hash("VNrT" + acc.getId() + "9Nr9=wes" + encPass + "uw7@"));
             a.setProhibited(acc.getProhibited());
 
             em.getTransaction().commit();
@@ -671,11 +686,13 @@ public class ApplicationWebService {
             em.getTransaction().rollback();
             return 0;
         }
+        System.out.println(a.getPass());
         return 1;
     }
 
     /**
      * Delete an administrator account
+     *
      * @param id
      * @return 1: success | 0: fail
      */
@@ -719,24 +736,24 @@ public class ApplicationWebService {
         EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
         return em.createNamedQuery("Properties.findAll").getResultList();
     }
-    
+
     @WebMethod(operationName = "getPropertyByKey")
-    public Properties getPropertyByKey(@WebParam(name = "propertyKey")String k) {
+    public Properties getPropertyByKey(@WebParam(name = "propertyKey") String k) {
         EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
         return em.find(Properties.class, k);
     }
-    
+
     @WebMethod(operationName = "getPropertyValueByKey")
-    public String getPropertyValueByKey(@WebParam(name = "propertyKey")String k) {
+    public String getPropertyValueByKey(@WebParam(name = "propertyKey") String k) {
         EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
         return em.find(Properties.class, k).getValue();
     }
-    
+
     @WebMethod(operationName = "addProperty")
-    public int addProperty(@WebParam(name = "poperty")Properties p) {
+    public int addProperty(@WebParam(name = "poperty") Properties p) {
         EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
         Properties prop = em.find(Properties.class, p.getKey());
-        if (prop!=null || p.getKey()==null || p.getKey().equals("")) {
+        if (prop != null || p.getKey() == null || p.getKey().equals("")) {
             return 0;
         }
         em.getTransaction().begin();
@@ -749,12 +766,12 @@ public class ApplicationWebService {
         }
         return 1;
     }
-    
+
     @WebMethod(operationName = "updateProperty")
-    public int updateProperty(@WebParam(name = "poperty")Properties p) {
+    public int updateProperty(@WebParam(name = "poperty") Properties p) {
         EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
         Properties prop = em.find(Properties.class, p.getKey());
-        if (prop==null) {
+        if (prop == null) {
             return 0;
         }
         em.getTransaction().begin();
@@ -767,12 +784,12 @@ public class ApplicationWebService {
         }
         return 1;
     }
-    
+
     @WebMethod(operationName = "removeProperty")
-    public int removeProperty(@WebParam(name = "popertyKey")String k) {
+    public int removeProperty(@WebParam(name = "popertyKey") String k) {
         EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
         Properties p = em.find(Properties.class, k);
-        if (p==null) {
+        if (p == null) {
             return 0;
         }
         em.getTransaction().begin();
@@ -786,5 +803,5 @@ public class ApplicationWebService {
         return 1;
     }
     // </editor-fold>
-    
+
 }

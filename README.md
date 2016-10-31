@@ -8,7 +8,7 @@ Java-based WebService (Traditional WS)
 - Server: Tomcat EE 7.0.5x
 - Database: SQL Server 2014
 - Persistence: JPA Eclipse Link 2.1
-- Prefered connection: WSDL
+- Preferred connection: WSDL
 - IDE: NetBeans 8.1
 
 
@@ -17,4 +17,3 @@ Java-based WebService (Traditional WS)
 Web Services:
 - ApplicationWebService: Conatains all methods
 - Servlet path: /ApplicationWebService
-

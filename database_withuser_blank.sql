@@ -1,11 +1,11 @@
 use master
 go
 -- create specific user for db
+if exists (SELECT name FROM sys.database_principals where name='dbuser_kma_qldiem') drop login dbuser_kma_qldiem
+go
 create login dbuser_kma_qldiem with password = 'jhdsf7.843fb%jaecbbU8DSTsRsd)zfdree'
 go
 alter login dbuser_kma_qldiem enable
-go
-create user dbuser_kma_qldiem for login dbuser_kma_qldiem
 go
 -- create db
 if exists (select name from sysdatabases where name='KMA_QLDiem') drop database KMA_QLDiem 
@@ -13,6 +13,12 @@ go
 create database KMA_QLDiem
 go
 use KMA_QLDiem
+go
+
+-- grant permission
+create user dbuser_kma_qldiem for login dbuser_kma_qldiem
+go
+grant select, insert, update, delete to dbuser_kma_qldiem
 go
 
 -- MAIN TABLES
