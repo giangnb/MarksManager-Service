@@ -39,13 +39,13 @@ public class Admin implements Serializable {
     private String pass;
     @Basic(optional = false)
     @Lob
-    private String prohibited;
+    private String prohibited="";
     @Basic(optional = false)
     @Column(name = "last_login")
-    private long lastLogin;
+    private long lastLogin=0;
     @Basic(optional = false)
     @Column(name = "last_change")
-    private long lastChange;
+    private long lastChange=0;
 
     public Admin() {
     }

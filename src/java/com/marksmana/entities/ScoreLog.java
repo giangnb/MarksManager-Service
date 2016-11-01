@@ -42,7 +42,7 @@ public class ScoreLog implements Serializable {
     @Basic(optional = false)
     private String scores;
     @Basic(optional = false)
-    private String remarks;
+    private String remarks="";
     @Basic(optional = false)
     @Column(name = "school_year")
     private String schoolYear;

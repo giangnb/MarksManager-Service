@@ -45,7 +45,7 @@ public class Student implements Serializable {
     @Basic(optional = false)
     private String name;
     @Basic(optional = false)
-    private String info;
+    private String info="";
     @JoinColumn(name = "classId", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Clazz classId;

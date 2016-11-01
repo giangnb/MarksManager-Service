@@ -44,7 +44,7 @@ public class Clazz implements Serializable {
     @Basic(optional = false)
     private String name;
     @Basic(optional = false)
-    private String info;
+    private String info="";
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "classId")
     private List<Student> studentList;
     @JoinColumn(name = "bulkId", referencedColumnName = "id")

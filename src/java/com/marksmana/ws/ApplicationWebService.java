@@ -5,6 +5,7 @@
  */
 package com.marksmana.ws;
 
+// <editor-fold defaultstate="collapsed" desc="Import statements">
 import com.marksmana.entities.Admin;
 import com.marksmana.entities.Bulk;
 import com.marksmana.entities.Clazz;
@@ -17,7 +18,7 @@ import com.marksmana.entities.Teacher;
 import com.marksmana.info.Information;
 import com.marksmana.utils.Encrypt;
 import com.marksmana.utils.Json;
-import com.marksmana.utils.scorerecords.ScoresRecordValue;
+import com.marksmana.utils.scoresbo.ScoresRecord;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -27,6 +28,7 @@ import javax.jws.WebParam;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+// </editor-fold>
 
 /**
  *
@@ -71,12 +73,13 @@ public class ApplicationWebService {
                 return 0;
             }
         }
-        em.getTransaction().begin();
+        EntityTransaction et = em.getTransaction();
+        et.begin();
         try {
             em.persist(s);
-            em.getTransaction().commit();
+            et.commit();
         } catch (Exception e) {
-            em.getTransaction().rollback();
+            et.rollback();
             return 0;
         }
         return 1;
@@ -148,6 +151,8 @@ public class ApplicationWebService {
                 return 0;
             }
         }
+        String pass = Encrypt.hash(t.getUsername() + "{j3@p-{>uDj;9GC" + t.getPass());
+        t.setPass(pass);
         em.getTransaction().begin();
         try {
             em.persist(t);
@@ -174,7 +179,8 @@ public class ApplicationWebService {
             teacher.setClazzList(t.getClazzList());
             teacher.setInfo(t.getInfo());
             teacher.setName(t.getName());
-            teacher.setPass(t.getPass());
+            String pass = Encrypt.hash(t.getUsername() + "{j3@p-{>uDj;9GC" + t.getPass());
+            teacher.setPass(pass);
             teacher.setScoreList(t.getScoreList());
             teacher.setSubjectList(t.getSubjectList());
             teacher.setUsername(t.getUsername());
@@ -292,15 +298,20 @@ public class ApplicationWebService {
      * @return Teacher account ID
      */
     @WebMethod(operationName = "teacherLogin")
-    public int teacherLogin(@WebParam(name = "userId") String user, @WebParam(name = "password") String pass) {
+    public Teacher teacherLogin(@WebParam(name = "userId") String user, @WebParam(name = "password") String pswd) {
+        System.out.println(String.format("User: %s\nPass: %s", user, pswd));
+        String pass = Encrypt.hash(user+"{j3@p-{>uDj;9GC"+pswd);
         EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
-        List<Teacher> results = em.createNamedQuery("Teacher.login")
-                .setParameter("pass", pass)
+        List<Teacher> results = em.createNamedQuery("Teacher.findByUsername")
                 .setParameter("user", user).getResultList();
         if (results.size() > 0) {
             int id = results.get(0).getId();
-
             Teacher t = em.find(Teacher.class, id);
+            
+            if (!pass.equals(t.getPass())) {
+                return null;
+            }
+            
             em.getTransaction().begin();
             try {
                 Information info;
@@ -316,9 +327,9 @@ public class ApplicationWebService {
                 em.getTransaction().rollback();
             }
 
-            return id;
+            return t;
         }
-        return -1;
+        return null;
     }
     // </editor-fold>
 
@@ -403,14 +414,14 @@ public class ApplicationWebService {
                 .setParameter("classId", id).getResultList();
         EntityTransaction trans = em.getTransaction();
         for (Student s : list) {
-            ScoresRecordValue recordVal = null;
+            ScoresRecord recordVal = null;
 
             trans.begin();
             try {
                 // Add to ScoreLog
                 //Old:String json = Json.SerializeObject(s);
-                recordVal = new ScoresRecordValue();
-                String json = recordVal.addScoresList(s.getScoreList());
+                recordVal = new ScoresRecord(s.getScoreList());
+                String json = recordVal.toJson();
                 ScoreLog log = new ScoreLog();
                 log.setSchoolYear(em.find(Properties.class, "school_year").getValue());
                 log.setScores(json);
@@ -452,12 +463,13 @@ public class ApplicationWebService {
                 return 0;
             }
         }
-        em.getTransaction().begin();
+        EntityTransaction et = em.getTransaction();
+        et.begin();
         try {
             em.persist(c);
-            em.getTransaction().commit();
+            et.commit();
         } catch (Exception e) {
-            em.getTransaction().rollback();
+            et.rollback();
             return 0;
         }
         return 1;
@@ -573,14 +585,15 @@ public class ApplicationWebService {
         if (bu == null) {
             return 0;
         }
-        em.getTransaction().begin();
+        EntityTransaction et = em.getTransaction();
+        et.begin();
         try {
             bu.getClazzList().clear();
             bu.getSubjectList().clear();
             em.remove(bu);
-            em.getTransaction().commit();
+            et.commit();
         } catch (Exception e) {
-            em.getTransaction().rollback();
+            et.rollback();
             return 0;
         }
         return 1;

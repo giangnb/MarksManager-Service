@@ -41,7 +41,7 @@ public class Score implements Serializable {
     @Basic(optional = false)
     private double score;
     @Basic(optional = false)
-    private short coefficient;
+    private short coefficient=1;
     @JoinColumn(name = "studentId", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Student studentId;

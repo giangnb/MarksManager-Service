@@ -45,7 +45,7 @@ public class Bulk implements Serializable {
     @Basic(optional = false)
     private String name;
     @Basic(optional = false)
-    private String info;
+    private String info="";
     @JoinTable(name = "t_bulk_subject", joinColumns = {
         @JoinColumn(name = "bulkId", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "subjectId", referencedColumnName = "id")})

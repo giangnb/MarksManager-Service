@@ -43,12 +43,12 @@ public class Teacher implements Serializable {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Basic(optional = false)
     private Integer id;
-    private String username;
+    private String username="";
     private String pass;
     @Basic(optional = false)
     private String name;
     @Basic(optional = false)
-    private String info;
+    private String info="";
     @ManyToMany(mappedBy = "teacherList")
     private List<Subject> subjectList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "teacherId")

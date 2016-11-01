@@ -47,7 +47,7 @@ public class Subject implements Serializable {
     @Basic(optional = false)
     private String name;
     @Basic(optional = false)
-    private String info;
+    private String info="";
     @JoinTable(name = "t_teacher_subject", joinColumns = {
         @JoinColumn(name = "subjectId", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "teacherId", referencedColumnName = "id")})
