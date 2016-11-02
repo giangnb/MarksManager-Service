@@ -33,6 +33,9 @@ public class ScoresRecord {
     }
 
     public ScoresRecord(List<Score> s) {
+        list = new ArrayList<ScoresGroup>();
+        scores = new ScoresGroup[1];
+        
         for (Score score : s) {
             addScore(score);
         }

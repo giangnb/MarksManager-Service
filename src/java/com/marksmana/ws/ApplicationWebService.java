@@ -300,18 +300,18 @@ public class ApplicationWebService {
     @WebMethod(operationName = "teacherLogin")
     public Teacher teacherLogin(@WebParam(name = "userId") String user, @WebParam(name = "password") String pswd) {
         System.out.println(String.format("User: %s\nPass: %s", user, pswd));
-        String pass = Encrypt.hash(user+"{j3@p-{>uDj;9GC"+pswd);
+        String pass = Encrypt.hash(user + "{j3@p-{>uDj;9GC" + pswd);
         EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
         List<Teacher> results = em.createNamedQuery("Teacher.findByUsername")
                 .setParameter("user", user).getResultList();
         if (results.size() > 0) {
             int id = results.get(0).getId();
             Teacher t = em.find(Teacher.class, id);
-            
+
             if (!pass.equals(t.getPass())) {
                 return null;
             }
-            
+
             em.getTransaction().begin();
             try {
                 Information info;
@@ -413,29 +413,42 @@ public class ApplicationWebService {
         List<Student> list = em.createNamedQuery("Student.findByClass")
                 .setParameter("classId", id).getResultList();
         EntityTransaction trans = em.getTransaction();
+        ScoresRecord recordVal = null;
         for (Student s : list) {
-            ScoresRecord recordVal = null;
-
             trans.begin();
+//            System.out.println("Transaction OK");
             try {
                 // Add to ScoreLog
                 //Old:String json = Json.SerializeObject(s);
                 recordVal = new ScoresRecord(s.getScoreList());
                 String json = recordVal.toJson();
+//                System.out.println("Json:\n\t" + json);
                 ScoreLog log = new ScoreLog();
-                log.setSchoolYear(em.find(Properties.class, "school_year").getValue());
+                try {
+                    log.setSchoolYear(em.find(Properties.class, "school_year").getValue());
+                } catch (NullPointerException ex) {
+                    // ignore
+                    log.setSchoolYear("");
+                }
+                log.setRemarks("");
                 log.setScores(json);
                 log.setStudentId(s);
+//                System.out.println("Score log object OK");
                 em.persist(log);
+                System.out.println("Log created for student #" + s.getId());
                 // Remove Scores
-                List<Score> score = em.createNamedQuery("Score.findByStudent")
-                        .setParameter("studentId", s.getId()).getResultList();
+                List<Score> score = s.getScoreList();
+//                System.out.println("Get old scores OK");
+                System.out.println("Scores removal:");
                 for (Score sc : score) {
                     em.remove(sc);
+                    System.out.println("\tRemoved id: " + sc.getId());
                 }
+//                System.out.println("Delete old score OK");
 
                 trans.commit();
             } catch (Exception ex) {
+                System.out.println("Archive failed:\n\t" + ex.getMessage());
                 trans.rollback();
             }
         }
