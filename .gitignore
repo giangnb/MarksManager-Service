@@ -67,6 +67,8 @@ nbproject/genfiles.properties
 nbproject/*
 nbproject
 /dist/
-/build/
+build
 build/*
+build/web/*
 /src/conf/persistence.xml.txt
+build/web/WEB-INF/classes/META-INF/persistence.xml

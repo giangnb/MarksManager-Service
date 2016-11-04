@@ -34,6 +34,7 @@ import javax.persistence.Persistence;
  *
  * @author Giang
  */
+
 @WebService(serviceName = "ApplicationWebService")
 public class ApplicationWebService {
 
@@ -416,13 +417,9 @@ public class ApplicationWebService {
         ScoresRecord recordVal = null;
         for (Student s : list) {
             trans.begin();
-//            System.out.println("Transaction OK");
             try {
-                // Add to ScoreLog
-                //Old:String json = Json.SerializeObject(s);
                 recordVal = new ScoresRecord(s.getScoreList());
                 String json = recordVal.toJson();
-//                System.out.println("Json:\n\t" + json);
                 ScoreLog log = new ScoreLog();
                 try {
                     log.setSchoolYear(em.find(Properties.class, "school_year").getValue());
@@ -433,24 +430,63 @@ public class ApplicationWebService {
                 log.setRemarks("");
                 log.setScores(json);
                 log.setStudentId(s);
-//                System.out.println("Score log object OK");
                 em.persist(log);
                 System.out.println("Log created for student #" + s.getId());
                 // Remove Scores
                 List<Score> score = s.getScoreList();
-//                System.out.println("Get old scores OK");
                 System.out.println("Scores removal:");
                 for (Score sc : score) {
                     em.remove(sc);
                     System.out.println("\tRemoved id: " + sc.getId());
                 }
-//                System.out.println("Delete old score OK");
 
                 trans.commit();
             } catch (Exception ex) {
                 System.out.println("Archive failed:\n\t" + ex.getMessage());
                 trans.rollback();
             }
+        }
+    }
+    
+    @WebMethod(operationName = "archiveToLogByStudent")
+    public int archiveToLogByStudent(@WebParam(name = "studentId") int id) {
+        EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
+        Student s = em.find(Student.class, id);
+        if (s==null) {
+            return 0;
+        }
+        EntityTransaction trans = em.getTransaction();
+        ScoresRecord recordVal;
+        trans.begin();
+        try {
+            recordVal = new ScoresRecord(s.getScoreList());
+            String json = recordVal.toJson();
+            ScoreLog log = new ScoreLog();
+            try {
+                log.setSchoolYear(em.find(Properties.class, "school_year").getValue());
+            } catch (NullPointerException ex) {
+                // ignore
+                log.setSchoolYear("");
+            }
+            log.setRemarks("");
+            log.setScores(json);
+            log.setStudentId(s);
+            em.persist(log);
+            System.out.println("Log created for student #" + s.getId());
+            // Remove Scores
+            List<Score> score = s.getScoreList();
+            System.out.println("Scores removal:");
+            for (Score sc : score) {
+                em.remove(sc);
+                System.out.println("\tRemoved id: " + sc.getId());
+            }
+
+            trans.commit();
+            return 1;
+        } catch (Exception ex) {
+            System.out.println("Archive failed:\n\t" + ex.getMessage());
+            trans.rollback();
+            return 0;
         }
     }
     // </editor-fold>

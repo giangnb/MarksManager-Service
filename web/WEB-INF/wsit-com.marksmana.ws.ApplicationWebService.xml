@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+ <definitions 
+ xmlns="http://schemas.xmlsoap.org/wsdl/" 
+ xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+ xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+ xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="ApplicationWebService" targetNamespace="http://ws.marksmana.com/" xmlns:tns="http://ws.marksmana.com/" 
+ >
+    <message name="getStudent"/>
+    <message name="getStudentResponse"/>
+    <message name="getStudentById"/>
+    <message name="getStudentByIdResponse"/>
+    <message name="getStudentsByName"/>
+    <message name="getStudentsByNameResponse"/>
+    <message name="getStudentsByClass"/>
+    <message name="getStudentsByClassResponse"/>
+    <message name="addStudent"/>
+    <message name="addStudentResponse"/>
+    <message name="updateStudent"/>
+    <message name="updateStudentResponse"/>
+    <message name="removeStudent"/>
+    <message name="removeStudentResponse"/>
+    <message name="getTeachers"/>
+    <message name="getTeachersResponse"/>
+    <message name="getTeacherById"/>
+    <message name="getTeacherByIdResponse"/>
+    <message name="addTeacher"/>
+    <message name="addTeacherResponse"/>
+    <message name="updateTeacher"/>
+    <message name="updateTeacherResponse"/>
+    <message name="getSubjects"/>
+    <message name="getSubjectsResponse"/>
+    <message name="getSubjectById"/>
+    <message name="getSubjectByIdResponse"/>
+    <message name="getSubjectsByTeacher"/>
+    <message name="getSubjectsByTeacherResponse"/>
+    <message name="getSubjectsByBulk"/>
+    <message name="getSubjectsByBulkResponse"/>
+    <message name="addSubject"/>
+    <message name="addSubjectResponse"/>
+    <message name="updateSubject"/>
+    <message name="updateSubjectResponse"/>
+    <message name="removeSubject"/>
+    <message name="removeSubjectResponse"/>
+    <message name="teacherLogin"/>
+    <message name="teacherLoginResponse"/>
+    <message name="getScoresBySubject"/>
+    <message name="getScoresBySubjectResponse"/>
+    <message name="getScoresByClass"/>
+    <message name="getScoresByClassResponse"/>
+    <message name="addScores"/>
+    <message name="addScoresResponse"/>
+    <message name="updateScores"/>
+    <message name="updateScoresResponse"/>
+    <message name="removeScores"/>
+    <message name="removeScoresResponse"/>
+    <message name="archiveToLog"/>
+    <message name="archiveToLogResponse"/>
+    <message name="getClasses"/>
+    <message name="getClassesResponse"/>
+    <message name="getClassById"/>
+    <message name="getClassByIdResponse"/>
+    <message name="addClass"/>
+    <message name="addClassResponse"/>
+    <message name="updateClass"/>
+    <message name="updateClassResponse"/>
+    <message name="removeClass"/>
+    <message name="removeClassResponse"/>
+    <message name="getBulks"/>
+    <message name="getBulksResponse"/>
+    <message name="getBulkById"/>
+    <message name="getBulkByIdResponse"/>
+    <message name="addBulk"/>
+    <message name="addBulkResponse"/>
+    <message name="updateBulk"/>
+    <message name="updateBulkResponse"/>
+    <message name="removeBulk"/>
+    <message name="removeBulkResponse"/>
+    <message name="adminLogin"/>
+    <message name="adminLoginResponse"/>
+    <message name="getAdmins"/>
+    <message name="getAdminsResponse"/>
+    <message name="addAdmin"/>
+    <message name="addAdminResponse"/>
+    <message name="updateAdmin"/>
+    <message name="updateAdminResponse"/>
+    <message name="removeAdmin"/>
+    <message name="removeAdminResponse"/>
+    <message name="getProperties"/>
+    <message name="getPropertiesResponse"/>
+    <message name="getPropertyByKey"/>
+    <message name="getPropertyByKeyResponse"/>
+    <message name="getPropertyValueByKey"/>
+    <message name="getPropertyValueByKeyResponse"/>
+    <message name="addProperty"/>
+    <message name="addPropertyResponse"/>
+    <message name="updateProperty"/>
+    <message name="updatePropertyResponse"/>
+    <message name="removeProperty"/>
+    <message name="removePropertyResponse"/>
+    <portType name="ApplicationWebService">
+        <operation name="getStudent">
+            <input message="tns:getStudent"/>
+            <output message="tns:getStudentResponse"/>
+        </operation>
+        <operation name="getStudentById">
+            <input message="tns:getStudentById"/>
+            <output message="tns:getStudentByIdResponse"/>
+        </operation>
+        <operation name="getStudentsByName">
+            <input message="tns:getStudentsByName"/>
+            <output message="tns:getStudentsByNameResponse"/>
+        </operation>
+        <operation name="getStudentsByClass">
+            <input message="tns:getStudentsByClass"/>
+            <output message="tns:getStudentsByClassResponse"/>
+        </operation>
+        <operation name="addStudent">
+            <input message="tns:addStudent"/>
+            <output message="tns:addStudentResponse"/>
+        </operation>
+        <operation name="updateStudent">
+            <input message="tns:updateStudent"/>
+            <output message="tns:updateStudentResponse"/>
+        </operation>
+        <operation name="removeStudent">
+            <input message="tns:removeStudent"/>
+            <output message="tns:removeStudentResponse"/>
+        </operation>
+        <operation name="getTeachers">
+            <input message="tns:getTeachers"/>
+            <output message="tns:getTeachersResponse"/>
+        </operation>
+        <operation name="getTeacherById">
+            <input message="tns:getTeacherById"/>
+            <output message="tns:getTeacherByIdResponse"/>
+        </operation>
+        <operation name="addTeacher">
+            <input message="tns:addTeacher"/>
+            <output message="tns:addTeacherResponse"/>
+        </operation>
+        <operation name="updateTeacher">
+            <input message="tns:updateTeacher"/>
+            <output message="tns:updateTeacherResponse"/>
+        </operation>
+        <operation name="getSubjects">
+            <input message="tns:getSubjects"/>
+            <output message="tns:getSubjectsResponse"/>
+        </operation>
+        <operation name="getSubjectById">
+            <input message="tns:getSubjectById"/>
+            <output message="tns:getSubjectByIdResponse"/>
+        </operation>
+        <operation name="getSubjectsByTeacher">
+            <input message="tns:getSubjectsByTeacher"/>
+            <output message="tns:getSubjectsByTeacherResponse"/>
+        </operation>
+        <operation name="getSubjectsByBulk">
+            <input message="tns:getSubjectsByBulk"/>
+            <output message="tns:getSubjectsByBulkResponse"/>
+        </operation>
+        <operation name="addSubject">
+            <input message="tns:addSubject"/>
+            <output message="tns:addSubjectResponse"/>
+        </operation>
+        <operation name="updateSubject">
+            <input message="tns:updateSubject"/>
+            <output message="tns:updateSubjectResponse"/>
+        </operation>
+        <operation name="removeSubject">
+            <input message="tns:removeSubject"/>
+            <output message="tns:removeSubjectResponse"/>
+        </operation>
+        <operation name="teacherLogin">
+            <input message="tns:teacherLogin"/>
+            <output message="tns:teacherLoginResponse"/>
+        </operation>
+        <operation name="getScoresBySubject">
+            <input message="tns:getScoresBySubject"/>
+            <output message="tns:getScoresBySubjectResponse"/>
+        </operation>
+        <operation name="getScoresByClass">
+            <input message="tns:getScoresByClass"/>
+            <output message="tns:getScoresByClassResponse"/>
+        </operation>
+        <operation name="addScores">
+            <input message="tns:addScores"/>
+            <output message="tns:addScoresResponse"/>
+        </operation>
+        <operation name="updateScores">
+            <input message="tns:updateScores"/>
+            <output message="tns:updateScoresResponse"/>
+        </operation>
+        <operation name="removeScores">
+            <input message="tns:removeScores"/>
+            <output message="tns:removeScoresResponse"/>
+        </operation>
+        <operation name="archiveToLog">
+            <input message="tns:archiveToLog"/>
+            <output message="tns:archiveToLogResponse"/>
+        </operation>
+        <operation name="getClasses">
+            <input message="tns:getClasses"/>
+            <output message="tns:getClassesResponse"/>
+        </operation>
+        <operation name="getClassById">
+            <input message="tns:getClassById"/>
+            <output message="tns:getClassByIdResponse"/>
+        </operation>
+        <operation name="addClass">
+            <input message="tns:addClass"/>
+            <output message="tns:addClassResponse"/>
+        </operation>
+        <operation name="updateClass">
+            <input message="tns:updateClass"/>
+            <output message="tns:updateClassResponse"/>
+        </operation>
+        <operation name="removeClass">
+            <input message="tns:removeClass"/>
+            <output message="tns:removeClassResponse"/>
+        </operation>
+        <operation name="getBulks">
+            <input message="tns:getBulks"/>
+            <output message="tns:getBulksResponse"/>
+        </operation>
+        <operation name="getBulkById">
+            <input message="tns:getBulkById"/>
+            <output message="tns:getBulkByIdResponse"/>
+        </operation>
+        <operation name="addBulk">
+            <input message="tns:addBulk"/>
+            <output message="tns:addBulkResponse"/>
+        </operation>
+        <operation name="updateBulk">
+            <input message="tns:updateBulk"/>
+            <output message="tns:updateBulkResponse"/>
+        </operation>
+        <operation name="removeBulk">
+            <input message="tns:removeBulk"/>
+            <output message="tns:removeBulkResponse"/>
+        </operation>
+        <operation name="adminLogin">
+            <input message="tns:adminLogin"/>
+            <output message="tns:adminLoginResponse"/>
+        </operation>
+        <operation name="getAdmins">
+            <input message="tns:getAdmins"/>
+            <output message="tns:getAdminsResponse"/>
+        </operation>
+        <operation name="addAdmin">
+            <input message="tns:addAdmin"/>
+            <output message="tns:addAdminResponse"/>
+        </operation>
+        <operation name="updateAdmin">
+            <input message="tns:updateAdmin"/>
+            <output message="tns:updateAdminResponse"/>
+        </operation>
+        <operation name="removeAdmin">
+            <input message="tns:removeAdmin"/>
+            <output message="tns:removeAdminResponse"/>
+        </operation>
+        <operation name="getProperties">
+            <input message="tns:getProperties"/>
+            <output message="tns:getPropertiesResponse"/>
+        </operation>
+        <operation name="getPropertyByKey">
+            <input message="tns:getPropertyByKey"/>
+            <output message="tns:getPropertyByKeyResponse"/>
+        </operation>
+        <operation name="getPropertyValueByKey">
+            <input message="tns:getPropertyValueByKey"/>
+            <output message="tns:getPropertyValueByKeyResponse"/>
+        </operation>
+        <operation name="addProperty">
+            <input message="tns:addProperty"/>
+            <output message="tns:addPropertyResponse"/>
+        </operation>
+        <operation name="updateProperty">
+            <input message="tns:updateProperty"/>
+            <output message="tns:updatePropertyResponse"/>
+        </operation>
+        <operation name="removeProperty">
+            <input message="tns:removeProperty"/>
+            <output message="tns:removePropertyResponse"/>
+        </operation>
+    </portType>
+    <binding name="ApplicationWebServicePortBinding" type="tns:ApplicationWebService">
+        <operation name="getStudent">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="getStudentById">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="getStudentsByName">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="getStudentsByClass">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="addStudent">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="updateStudent">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="removeStudent">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="getTeachers">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="getTeacherById">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="addTeacher">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="updateTeacher">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="getSubjects">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="getSubjectById">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="getSubjectsByTeacher">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="getSubjectsByBulk">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="addSubject">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="updateSubject">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="removeSubject">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="teacherLogin">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="getScoresBySubject">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="getScoresByClass">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="addScores">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="updateScores">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="removeScores">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="archiveToLog">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="getClasses">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="getClassById">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="addClass">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="updateClass">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="removeClass">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="getBulks">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="getBulkById">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="addBulk">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="updateBulk">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="removeBulk">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="adminLogin">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="getAdmins">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="addAdmin">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="updateAdmin">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="removeAdmin">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="getProperties">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="getPropertyByKey">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="getPropertyValueByKey">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="addProperty">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="updateProperty">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="removeProperty">
+            <input/>
+            <output/>
+        </operation>
+    </binding>
+    <service name="ApplicationWebService">
+        <port name="ApplicationWebServicePort" binding="tns:ApplicationWebServicePortBinding"/>
+    </service>
+</definitions>

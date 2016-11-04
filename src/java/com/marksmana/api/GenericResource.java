@@ -5,13 +5,12 @@
  */
 package com.marksmana.api;
 
+import com.marksmana.entities.Properties;
 import com.marksmana.entities.Score;
 import com.marksmana.entities.ScoreLog;
 import com.marksmana.entities.Student;
 import com.marksmana.utils.Json;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.ws.rs.core.Context;
@@ -57,6 +56,19 @@ public class GenericResource {
             // ignore
         }
         return "[]";
+    }
+    @GET
+    @Path("/prop/{key}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Properties getPropertyByKey(@PathParam("key") int key) {
+        Properties p=null;
+        try {
+            EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
+            p = em.find(Properties.class, key);
+        } catch (Exception ex) {
+            // ignore
+        }
+        return p;
     }
 
     @GET

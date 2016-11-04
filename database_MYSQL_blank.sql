@@ -75,24 +75,29 @@ alter table t_scorelog
 ;
 
 alter table t_score
-	add constraint FK_score_subject foreign key (subjectId) references t_subject(id),
-		constraint FK_score_student foreign key (studentId) references t_student(id),
-		constraint FK_score_teacher	foreign key (teacherId) references t_teacher(id)
+	add constraint FK_score_subject foreign key (subjectId) references t_subject(id);
+alter table t_score
+	add 		constraint FK_score_student foreign key (studentId) references t_student(id);
+alter table t_score
+	add 		constraint FK_score_teacher	foreign key (teacherId) references t_teacher(id)
 ;
 
 alter table t_class
-	add constraint FK_class_teacher foreign key (teacherId) references t_teacher(id),
-		constraint FK_class_bulk    foreign key (bulkId)    references t_bulk(id)
+	add constraint FK_class_teacher foreign key (teacherId) references t_teacher(id);
+alter table t_class
+	add 		constraint FK_class_bulk    foreign key (bulkId)    references t_bulk(id)
 ;
 
 alter table t_bulk_subject
-	add constraint FK_bulksubject_bulk foreign key (bulkId) references t_bulk(id),
-		constraint FK_bulksubject_subj foreign key (subjectId) references t_subject(id)
+	add constraint FK_bulksubject_bulk foreign key (bulkId) references t_bulk(id);
+alter table t_bulk_subject
+	add		constraint FK_bulksubject_subj foreign key (subjectId) references t_subject(id)
 ;
 
 alter table t_teacher_subject
-	add constraint FK_teachsubj_teacher foreign key (teacherId) references t_teacher(id),
-		constraint FK_teachsubj_subject foreign key (subjectId) references t_subject(id)
+	add constraint FK_teachsubj_teacher foreign key (teacherId) references t_teacher(id);
+alter table t_teacher_subject
+	add		constraint FK_teachsubj_subject foreign key (subjectId) references t_subject(id)
 ;
 -- TABLE CONSTRAINTS end
 

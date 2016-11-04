@@ -133,7 +133,7 @@
                 <p><b>Quản lý điểm cho Học sinh Phổ thông</b></p>
                 <h2 style="margin-top: -24px;">Web Service</h2>
                 <p>
-                    Đây là một JAX-WS bổ trợ cho ứng dụng web và ứng dụng desktop
+                    Đây là một JAX-WS và RESTful API bổ trợ cho ứng dụng web và ứng dụng desktop
                     <br/><br/>
                     
                     <a href="#" onclick="alert('Người thự hiện:\n - Nguyễn Bằng Giang (Trưởng nhóm)\n - Phạm Xuân Đức\n - Lê Tiến Đạt\n - Nguyễn Phương Nam\n - Ứng Đình Hướng\n\nMôn học: Lập trình hướng đối tượng\nLớp L01 - Khóa AT11 - Năm học 2016-2017\nHọc viện Kỹ thuật Mật mã')" class="button">
