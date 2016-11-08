@@ -183,7 +183,7 @@ public class ApplicationWebService {
                 // Password changed
                 try {
                     Information i = Json.DeserializeObject(t.getInfo(), Information.class);
-                    i.put("LastChange", new Date().getTime() + "");
+                    i.put("_LastChange", new Date().getTime() + "");
                     teacher.setInfo(i.toJson());
                 } catch (Exception ex) {
                     // ignore
@@ -330,7 +330,7 @@ public class ApplicationWebService {
                 } catch (Exception ex) {
                     info = new Information();
                 }
-                info.put("LastLogin", new Date().getTime() + "");
+                info.put("_LastLogin", new Date().getTime() + "");
                 t.setInfo(Json.SerializeObject(info));
                 em.getTransaction().commit();
             } catch (Exception ex) {
@@ -485,9 +485,33 @@ public class ApplicationWebService {
             }
         }
     }
+    
+    @WebMethod(operationName = "editArchiveRemark")
+    public int editArchiveRemark(@WebParam(name = "studentId") int id, @WebParam(name = "remark") String remark) {
+        EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
+        Student s = em.find(Student.class, id);
+        if (s == null) {
+            return 0;
+        }
+        List<ScoreLog> list = s.getScoreLogList();
+        if (list.size()<=0) return 0;
+        list.sort((ScoreLog o1, ScoreLog o2) -> (int) (o2.getId()-o1.getId()));
+        EntityTransaction trans = em.getTransaction();
+        trans.begin();
+        ScoreLog log = em.find(ScoreLog.class, list.get(0).getId());
+        try {
+            log.setRemarks(remark);
+            trans.commit();
+            return 1;
+        } catch (Exception ex) {
+            System.out.println("Archive editing failed:\n\t" + ex.getMessage());
+            trans.rollback();
+            return 0;
+        }
+    }
 
     @WebMethod(operationName = "archiveToLogByStudent")
-    public int archiveToLogByStudent(@WebParam(name = "studentId") int id) {
+    public int archiveToLogByStudent(@WebParam(name = "studentId") int id, @WebParam(name = "remark") String remark) {
         EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
         Student s = em.find(Student.class, id);
         if (s == null) {
@@ -506,7 +530,7 @@ public class ApplicationWebService {
                 // ignore
                 log.setSchoolYear("");
             }
-            log.setRemarks("");
+            log.setRemarks(remark);
             log.setScores(json);
             log.setStudentId(s);
             em.persist(log);
