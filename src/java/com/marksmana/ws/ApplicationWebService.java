@@ -34,7 +34,6 @@ import javax.persistence.Persistence;
  *
  * @author Giang
  */
-
 @WebService(serviceName = "ApplicationWebService")
 public class ApplicationWebService {
 
@@ -178,10 +177,21 @@ public class ApplicationWebService {
         em.getTransaction().begin();
         try {
             teacher.setClazzList(t.getClazzList());
-            teacher.setInfo(t.getInfo());
             teacher.setName(t.getName());
             String pass = Encrypt.hash(t.getUsername() + "{j3@p-{>uDj;9GC" + t.getPass());
-            teacher.setPass(pass);
+            if (!t.getPass().equals(pass)) {
+                // Password changed
+                try {
+                    Information i = Json.DeserializeObject(t.getInfo(), Information.class);
+                    i.put("LastChange", new Date().getTime() + "");
+                    teacher.setInfo(i.toJson());
+                } catch (Exception ex) {
+                    // ignore
+                }
+            } else {
+                teacher.setInfo(t.getInfo());
+                teacher.setPass(pass);
+            }
             teacher.setScoreList(t.getScoreList());
             teacher.setSubjectList(t.getSubjectList());
             teacher.setUsername(t.getUsername());
@@ -300,7 +310,6 @@ public class ApplicationWebService {
      */
     @WebMethod(operationName = "teacherLogin")
     public Teacher teacherLogin(@WebParam(name = "userId") String user, @WebParam(name = "password") String pswd) {
-        System.out.println(String.format("User: %s\nPass: %s", user, pswd));
         String pass = Encrypt.hash(user + "{j3@p-{>uDj;9GC" + pswd);
         EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
         List<Teacher> results = em.createNamedQuery("Teacher.findByUsername")
@@ -375,14 +384,43 @@ public class ApplicationWebService {
         for (Score score : s) {
             trans.begin();
             try {
-                em.persist(score);
-                trans.commit();
+                Score find = em.find(Score.class, score.getId());
+                if (find != null) {
+                    find.setCoefficient(score.getCoefficient());
+                    find.setScore(score.getScore());
+                    find.setStudentId(score.getStudentId());
+                    find.setSubjectId(score.getSubjectId());
+                    find.setTeacherId(score.getTeacherId());
+                    trans.commit();
+                }
             } catch (Exception ex) {
                 errors.add(score);
                 trans.rollback();
             }
         }
         return errors.toArray(new Score[errors.size()]);
+    }
+
+    @WebMethod(operationName = "updateScore")
+    public int updateScore(@WebParam(name = "score") Score score) {
+        EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
+        EntityTransaction trans = em.getTransaction();
+        trans.begin();
+        try {
+            Score find = em.find(Score.class, score.getId());
+            if (find != null) {
+                find.setCoefficient(score.getCoefficient());
+                find.setScore(score.getScore());
+                find.setStudentId(score.getStudentId());
+                find.setSubjectId(score.getSubjectId());
+                find.setTeacherId(score.getTeacherId());
+                trans.commit();
+            }
+        } catch (Exception ex) {
+            trans.rollback();
+            return 0;
+        }
+        return 1;
     }
 
     @WebMethod(operationName = "removeScores")
@@ -447,12 +485,12 @@ public class ApplicationWebService {
             }
         }
     }
-    
+
     @WebMethod(operationName = "archiveToLogByStudent")
     public int archiveToLogByStudent(@WebParam(name = "studentId") int id) {
         EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
         Student s = em.find(Student.class, id);
-        if (s==null) {
+        if (s == null) {
             return 0;
         }
         EntityTransaction trans = em.getTransaction();

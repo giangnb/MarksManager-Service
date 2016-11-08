@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.1" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="MarksManager-ServicePU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>com.marksmana.entities.ScoreLog</class>
@@ -13,11 +13,29 @@
     <class>com.marksmana.entities.Teacher</class>
     <class>com.marksmana.entities.Admin</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <!--<properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://giangnb.com:3306/giangnb_com_qldiem?zeroDateTimeBehavior=convertToNull&amp;useUnicode=true&amp;characterEncoding=UTF-8&amp;characterSetResults=utf8&amp;connectionCollation=utf8_unicode_ci"/>
+      <property name="javax.persistence.jdbc.user" value="qldiem_admin"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.password" value="@kFu004o"/>
+    </properties>-->
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://localhost:1433;databaseName=KMA_QLDiem"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://marksmanager.cemqqa00nibo.us-east-1.rds.amazonaws.com:3306/marksmanadb?zeroDateTimeBehavior=convertToNull&amp;useUnicode=true&amp;characterEncoding=UTF-8&amp;characterSetResults=utf8&amp;connectionCollation=utf8_unicode_ci"/>
+      <property name="javax.persistence.jdbc.user" value="dbuser"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.password" value="@kFu004o"/>
+    </properties>
+    <!--<properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://mssql173.dotvndns.vn;database=giangnb_com_quicknote;encrypt=false;loginTimeout=15;"/>
       <property name="javax.persistence.jdbc.user" value="dbuser_kma_qldiem"/>
       <property name="javax.persistence.jdbc.driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
-      <property name="javax.persistence.jdbc.password" value="jhdsf7.843fb%jaecbbU8DSTsRsd)zfdree"/>
+      <property name="javax.persistence.jdbc.password" value="@kFu004o"/>
     </properties>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://localhost:1433;databaseName=KMA_QLDiem"/>
+      <property name="javax.persistence.jdbc.user" value="sa"/>
+      <property name="javax.persistence.jdbc.driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
+      <property name="javax.persistence.jdbc.password" value="giangnb22"/>
+    </properties>-->
   </persistence-unit>
 </persistence>

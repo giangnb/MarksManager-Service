@@ -10,6 +10,7 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -49,11 +50,11 @@ public class Teacher implements Serializable {
     private String name;
     @Basic(optional = false)
     private String info="";
-    @ManyToMany(mappedBy = "teacherList")
+    @ManyToMany(mappedBy = "teacherList", fetch = FetchType.EAGER)
     private List<Subject> subjectList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "teacherId")
     private List<Score> scoreList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "teacherId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "teacherId", fetch = FetchType.EAGER)
     private List<Clazz> clazzList;
 
     public Teacher() {
@@ -109,7 +110,6 @@ public class Teacher implements Serializable {
         this.info = info;
     }
 
-    @XmlTransient
     public List<Subject> getSubjectList() {
         return subjectList;
     }
@@ -127,7 +127,6 @@ public class Teacher implements Serializable {
         this.scoreList = scoreList;
     }
 
-    @XmlTransient
     public List<Clazz> getClazzList() {
         return clazzList;
     }

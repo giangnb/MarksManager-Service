@@ -60,7 +60,7 @@ public class GenericResource {
     @GET
     @Path("/prop/{key}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Properties getPropertyByKey(@PathParam("key") int key) {
+    public Properties getPropertyByKey(@PathParam("key") String key) {
         Properties p=null;
         try {
             EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();

@@ -97,6 +97,8 @@
     <message name="updatePropertyResponse"/>
     <message name="removeProperty"/>
     <message name="removePropertyResponse"/>
+    <message name="updateScore"/>
+    <message name="updateScoreResponse"/>
     <portType name="ApplicationWebService">
         <operation name="getStudent">
             <input message="tns:getStudent"/>
@@ -282,6 +284,10 @@
             <input message="tns:removeProperty"/>
             <output message="tns:removePropertyResponse"/>
         </operation>
+        <operation name="updateScore">
+            <input message="tns:updateScore"/>
+            <output message="tns:updateScoreResponse"/>
+        </operation>
     </portType>
     <binding name="ApplicationWebServicePortBinding" type="tns:ApplicationWebService">
         <operation name="getStudent">
@@ -465,6 +471,10 @@
             <output/>
         </operation>
         <operation name="removeProperty">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="updateScore">
             <input/>
             <output/>
         </operation>
