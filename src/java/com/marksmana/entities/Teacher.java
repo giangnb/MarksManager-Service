@@ -35,7 +35,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Teacher.login", query = "SELECT t FROM Teacher t WHERE t.username = :user AND t.pass = :pass"),
     @NamedQuery(name = "Teacher.findByUsername", query = "SELECT t FROM Teacher t WHERE t.username = :user"),
     @NamedQuery(name = "Teacher.findByPass", query = "SELECT t FROM Teacher t WHERE t.pass = :pass"),
-    @NamedQuery(name = "Teacher.findByName", query = "SELECT t FROM Teacher t WHERE t.name = :name"),
+    @NamedQuery(name = "Teacher.findByName", query = "SELECT t FROM Teacher t WHERE t.name LIKE :name"),
     @NamedQuery(name = "Teacher.findByInfo", query = "SELECT t FROM Teacher t WHERE t.info = :info")})
 public class Teacher implements Serializable {
 
@@ -50,11 +50,11 @@ public class Teacher implements Serializable {
     private String name;
     @Basic(optional = false)
     private String info="";
-    @ManyToMany(mappedBy = "teacherList", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "teacherList")
     private List<Subject> subjectList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "teacherId")
     private List<Score> scoreList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "teacherId", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "teacherId")
     private List<Clazz> clazzList;
 
     public Teacher() {
@@ -110,6 +110,7 @@ public class Teacher implements Serializable {
         this.info = info;
     }
 
+    @XmlTransient
     public List<Subject> getSubjectList() {
         return subjectList;
     }
@@ -131,6 +132,7 @@ public class Teacher implements Serializable {
         return clazzList;
     }
 
+    @XmlTransient
     public void setClazzList(List<Clazz> clazzList) {
         this.clazzList = clazzList;
     }

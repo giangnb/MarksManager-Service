@@ -33,6 +33,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Clazz.findAll", query = "SELECT c FROM Clazz c"),
     @NamedQuery(name = "Clazz.findById", query = "SELECT c FROM Clazz c WHERE c.id = :id"),
     @NamedQuery(name = "Clazz.findByName", query = "SELECT c FROM Clazz c WHERE c.name = :name"),
+    @NamedQuery(name = "Clazz.findByTeacher", query = "SELECT c FROM Clazz c WHERE c.teacherId = :teacherId"),
     @NamedQuery(name = "Clazz.findByInfo", query = "SELECT c FROM Clazz c WHERE c.info = :info")})
 public class Clazz implements Serializable {
 

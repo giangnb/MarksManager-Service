@@ -28,7 +28,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Score.findAll", query = "SELECT s FROM Score s"),
     @NamedQuery(name = "Score.findById", query = "SELECT s FROM Score s WHERE s.id = :id"),
-    @NamedQuery(name = "Score.findByStudent", query = "SELECT s FROM Score s WHERE s.studentId.id = :studentId"),
+    @NamedQuery(name = "Score.findByStudent", query = "SELECT s FROM Score s WHERE s.studentId = :studentId"),
+    @NamedQuery(name = "Score.findBySubject", query = "SELECT s FROM Score s WHERE s.subjectId = :subjectId"),
+    @NamedQuery(name = "Score.findBySubjectAndClass", query = "SELECT s FROM Score s WHERE s.subjectId = :subjectId AND s.studentId.classId = :classId"),
+    @NamedQuery(name = "Score.findByStudentAndSubject", query = "SELECT s FROM Score s WHERE s.studentId = :studentId AND s.subjectId = :subjectId"),
     @NamedQuery(name = "Score.findByScore", query = "SELECT s FROM Score s WHERE s.score = :score"),
     @NamedQuery(name = "Score.findByCoefficient", query = "SELECT s FROM Score s WHERE s.coefficient = :coefficient")})
 public class Score implements Serializable {

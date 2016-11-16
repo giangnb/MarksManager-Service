@@ -10,6 +10,7 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -49,7 +50,7 @@ public class Bulk implements Serializable {
     @JoinTable(name = "t_bulk_subject", joinColumns = {
         @JoinColumn(name = "bulkId", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "subjectId", referencedColumnName = "id")})
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Subject> subjectList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "bulkId")
     private List<Clazz> clazzList;
@@ -91,7 +92,7 @@ public class Bulk implements Serializable {
         this.info = info;
     }
 
-    @XmlTransient
+    //@XmlTransient
     public List<Subject> getSubjectList() {
         return subjectList;
     }

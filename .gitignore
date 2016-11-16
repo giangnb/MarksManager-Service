@@ -66,6 +66,7 @@ nbproject/build-impl.xml
 nbproject/genfiles.properties
 nbproject/*
 nbproject
+nbproject/private/*
 /dist/
 build
 build/*

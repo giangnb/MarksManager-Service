@@ -10,6 +10,7 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -53,7 +54,7 @@ public class Subject implements Serializable {
         @JoinColumn(name = "teacherId", referencedColumnName = "id")})
     @ManyToMany
     private List<Teacher> teacherList;
-    @ManyToMany(mappedBy = "subjectList")
+    @ManyToMany(mappedBy = "subjectList", cascade = CascadeType.PERSIST)
     private List<Bulk> bulkList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "subjectId")
     private List<Score> scoreList;

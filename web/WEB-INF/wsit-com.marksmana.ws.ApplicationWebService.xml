@@ -3,10 +3,8 @@
  xmlns="http://schemas.xmlsoap.org/wsdl/" 
  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
  xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
- xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="ApplicationWebService" targetNamespace="http://ws.marksmana.com/" xmlns:tns="http://ws.marksmana.com/" 
+ xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="ApplicationWebService" targetNamespace="http://ws.marksmana.com/" xmlns:tns="http://ws.marksmana.com/" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702" 
  >
-    <message name="getStudent"/>
-    <message name="getStudentResponse"/>
     <message name="getStudentById"/>
     <message name="getStudentByIdResponse"/>
     <message name="getStudentsByName"/>
@@ -45,8 +43,6 @@
     <message name="teacherLoginResponse"/>
     <message name="getScoresBySubject"/>
     <message name="getScoresBySubjectResponse"/>
-    <message name="getScoresByClass"/>
-    <message name="getScoresByClassResponse"/>
     <message name="addScores"/>
     <message name="addScoresResponse"/>
     <message name="updateScores"/>
@@ -99,11 +95,19 @@
     <message name="removePropertyResponse"/>
     <message name="updateScore"/>
     <message name="updateScoreResponse"/>
+    <message name="getTeacherByName"/>
+    <message name="getTeacherByNameResponse"/>
+    <message name="getScoresByStudentAndSubject"/>
+    <message name="getScoresByStudentAndSubjectResponse"/>
+    <message name="getStudents"/>
+    <message name="getStudentsResponse"/>
+    <message name="addScore"/>
+    <message name="addScoreResponse"/>
+    <message name="getScoresBySubjectAndClass"/>
+    <message name="getScoresBySubjectAndClassResponse"/>
+    <message name="getClassesByTeacher"/>
+    <message name="getClassesByTeacherResponse"/>
     <portType name="ApplicationWebService">
-        <operation name="getStudent">
-            <input message="tns:getStudent"/>
-            <output message="tns:getStudentResponse"/>
-        </operation>
         <operation name="getStudentById">
             <input message="tns:getStudentById"/>
             <output message="tns:getStudentByIdResponse"/>
@@ -179,10 +183,6 @@
         <operation name="getScoresBySubject">
             <input message="tns:getScoresBySubject"/>
             <output message="tns:getScoresBySubjectResponse"/>
-        </operation>
-        <operation name="getScoresByClass">
-            <input message="tns:getScoresByClass"/>
-            <output message="tns:getScoresByClassResponse"/>
         </operation>
         <operation name="addScores">
             <input message="tns:addScores"/>
@@ -288,12 +288,32 @@
             <input message="tns:updateScore"/>
             <output message="tns:updateScoreResponse"/>
         </operation>
+        <operation name="getTeacherByName">
+            <input message="tns:getTeacherByName"/>
+            <output message="tns:getTeacherByNameResponse"/>
+        </operation>
+        <operation name="getScoresByStudentAndSubject">
+            <input message="tns:getScoresByStudentAndSubject"/>
+            <output message="tns:getScoresByStudentAndSubjectResponse"/>
+        </operation>
+        <operation name="getStudents">
+            <input message="tns:getStudents"/>
+            <output message="tns:getStudentsResponse"/>
+        </operation>
+        <operation name="addScore">
+            <input message="tns:addScore"/>
+            <output message="tns:addScoreResponse"/>
+        </operation>
+        <operation name="getScoresBySubjectAndClass">
+            <input message="tns:getScoresBySubjectAndClass"/>
+            <output message="tns:getScoresBySubjectAndClassResponse"/>
+        </operation>
+        <operation name="getClassesByTeacher">
+            <input message="tns:getClassesByTeacher"/>
+            <output message="tns:getClassesByTeacherResponse"/>
+        </operation>
     </portType>
     <binding name="ApplicationWebServicePortBinding" type="tns:ApplicationWebService">
-        <operation name="getStudent">
-            <input/>
-            <output/>
-        </operation>
         <operation name="getStudentById">
             <input/>
             <output/>
@@ -367,10 +387,6 @@
             <output/>
         </operation>
         <operation name="getScoresBySubject">
-            <input/>
-            <output/>
-        </operation>
-        <operation name="getScoresByClass">
             <input/>
             <output/>
         </operation>
@@ -478,8 +494,80 @@
             <input/>
             <output/>
         </operation>
+        <operation name="getTeacherByName">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="getScoresByStudentAndSubject">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="getStudents">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="addScore">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="getScoresBySubjectAndClass">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="getClassesByTeacher">
+            <input/>
+            <output/>
+        </operation>
     </binding>
     <service name="ApplicationWebService">
         <port name="ApplicationWebServicePort" binding="tns:ApplicationWebServicePortBinding"/>
     </service>
+    <wsp:Policy wsu:Id="ApplicationWebServicePortBinding_getScoresByClass_Input_Policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:EncryptedParts>
+                    <sp:Body/>
+                </sp:EncryptedParts>
+                <sp:SignedParts>
+                    <sp:Body/>
+                </sp:SignedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="ApplicationWebServicePortBinding_getScoresByClass_Output_Policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:EncryptedParts>
+                    <sp:Body/>
+                </sp:EncryptedParts>
+                <sp:SignedParts>
+                    <sp:Body/>
+                </sp:SignedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="ApplicationWebServicePortBinding_getStudent_Input_Policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:EncryptedParts>
+                    <sp:Body/>
+                </sp:EncryptedParts>
+                <sp:SignedParts>
+                    <sp:Body/>
+                </sp:SignedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+    <wsp:Policy wsu:Id="ApplicationWebServicePortBinding_getStudent_Output_Policy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <sp:EncryptedParts>
+                    <sp:Body/>
+                </sp:EncryptedParts>
+                <sp:SignedParts>
+                    <sp:Body/>
+                </sp:SignedParts>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
 </definitions>

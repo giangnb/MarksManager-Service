@@ -38,7 +38,7 @@ import javax.persistence.Persistence;
 public class ApplicationWebService {
 
     // <editor-fold defaultstate="collapsed" desc="Student Management"> 
-    @WebMethod(operationName = "getStudent")
+    @WebMethod(operationName = "getStudents")
     public List<Student> getStudents() {
         EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
         return em.createNamedQuery("Student.findAll").getResultList();
@@ -59,10 +59,10 @@ public class ApplicationWebService {
     }
 
     @WebMethod(operationName = "getStudentsByClass")
-    public List<Student> getStudentsByClass(@WebParam(name = "classId") int id) {
+    public List<Student> getStudentsByClass(@WebParam(name = "clazz") Clazz c) {
         EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
         return em.createNamedQuery("Student.findByClass")
-                .setParameter("classId", id).getResultList();
+                .setParameter("classId", c).getResultList();
     }
 
     @WebMethod(operationName = "addStudent")
@@ -83,6 +83,28 @@ public class ApplicationWebService {
             return 0;
         }
         return 1;
+    }
+
+    @WebMethod(operationName = "addStudentsList")
+    public Student[] addStudentsList(@WebParam(name = "studentList") Student[] stu) {
+        List<Student> err = new ArrayList<Student>();
+        EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
+        EntityTransaction et = em.getTransaction();
+
+        et.begin();
+        for (Student s : stu) {
+            if (s.getId() != null) {
+                s.setId(null);
+            }
+            try {
+                em.persist(s);
+            } catch (Exception e) {
+                err.add(s);
+            }
+        }
+        et.commit();
+
+        return err.toArray(new Student[err.size()]);
     }
 
     @WebMethod(operationName = "updateStudent")
@@ -141,6 +163,13 @@ public class ApplicationWebService {
     public Teacher getTeacherById(@WebParam(name = "id") int id) {
         EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
         return em.find(Teacher.class, id);
+    }
+
+    @WebMethod(operationName = "getTeacherByName")
+    public List<Teacher> getTeacherByName(@WebParam(name = "name") String name) {
+        EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
+        return em.createNamedQuery("Teacher.findByName")
+                .setParameter("name", "%" + name + "%").getResultList();
     }
 
     @WebMethod(operationName = "addTeacher")
@@ -345,17 +374,41 @@ public class ApplicationWebService {
 
     // <editor-fold defaultstate="collapsed" desc="Scores Managing"> 
     @WebMethod(operationName = "getScoresBySubject")
-    public List<Score> getScoresBySubject(@WebParam(name = "subjectId") int id) {
+    public List<Score> getScoresBySubject(@WebParam(name = "subject") Subject s) {
         EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
         return em.createNamedQuery("Score.findBySubject")
-                .setParameter("subjectId", id).getResultList();
+                .setParameter("subjectId", s).getResultList();
     }
 
-    @WebMethod(operationName = "getScoresByClass")
-    public List<Score> getScoresByClass(@WebParam(name = "classId") int id) {
+    @WebMethod(operationName = "getScoresByStudentAndSubject")
+    public List<Score> getScoresByStudentAndSubject(@WebParam(name = "student") Student s, @WebParam(name = "subject") Subject sj) {
         EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
-        return em.createNamedQuery("Score.findByClass")
-                .setParameter("classId", id).getResultList();
+        return em.createNamedQuery("Score.findByStudentAndSubject")
+                .setParameter("studentId", s)
+                .setParameter("subjectId", sj).getResultList();
+    }
+
+    @WebMethod(operationName = "getScoresBySubjectAndClass")
+    public List<Score> getScoresBySubjectAndClass(@WebParam(name = "subject") Subject s, @WebParam(name = "clazz") Clazz c) {
+        EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
+        return em.createNamedQuery("Score.findBySubjectAndClass")
+                .setParameter("subjectId", s)
+                .setParameter("classId", c).getResultList();
+    }
+
+    @WebMethod(operationName = "addScore")
+    public int addScore(@WebParam(name = "score") Score s) {
+        EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
+        EntityTransaction trans = em.getTransaction();
+        trans.begin();
+        try {
+            em.persist(s);
+            trans.commit();
+        } catch (Exception ex) {
+            trans.rollback();
+            return 0;
+        }
+        return 1;
     }
 
     @WebMethod(operationName = "addScores")
@@ -485,7 +538,7 @@ public class ApplicationWebService {
             }
         }
     }
-    
+
     @WebMethod(operationName = "editArchiveRemark")
     public int editArchiveRemark(@WebParam(name = "studentId") int id, @WebParam(name = "remark") String remark) {
         EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
@@ -494,8 +547,10 @@ public class ApplicationWebService {
             return 0;
         }
         List<ScoreLog> list = s.getScoreLogList();
-        if (list.size()<=0) return 0;
-        list.sort((ScoreLog o1, ScoreLog o2) -> (int) (o2.getId()-o1.getId()));
+        if (list.size() <= 0) {
+            return 0;
+        }
+        list.sort((ScoreLog o1, ScoreLog o2) -> (int) (o2.getId() - o1.getId()));
         EntityTransaction trans = em.getTransaction();
         trans.begin();
         ScoreLog log = em.find(ScoreLog.class, list.get(0).getId());
@@ -560,6 +615,13 @@ public class ApplicationWebService {
         return em.createNamedQuery("Clazz.findAll").getResultList();
     }
 
+    @WebMethod(operationName = "getClassesByTeacher")
+    public List<Clazz> getClassesByTeacher(@WebParam(name = "teacher") Teacher t) {
+        EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
+        return em.createNamedQuery("Clazz.findByTeacher")
+                .setParameter("teacherId", t).getResultList();
+    }
+
     @WebMethod(operationName = "getClassById")
     public Clazz getClassById(@WebParam(name = "id") int id) {
         EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
@@ -614,12 +676,25 @@ public class ApplicationWebService {
 
     @WebMethod(operationName = "removeClass")
     public int removeClass(@WebParam(name = "id") int id) {
+        if (id == 1) {
+            return 0;
+        }
         EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
         Clazz cla = em.find(Clazz.class, id);
         if (cla == null) {
             return 0;
         }
         em.getTransaction().begin();
+        try {
+            for (Student s : cla.getStudentList()) {
+                s.setClassId(new Clazz(1)); // Move to archive class
+            }
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            return 0;
+        }
+        //em.getTransaction().begin();
         try {
             cla.getStudentList().clear();
             em.remove(cla);
@@ -646,7 +721,7 @@ public class ApplicationWebService {
     }
 
     @WebMethod(operationName = "addBulk")
-    public int addBulk(@WebParam(name = "bulk") Bulk b) {
+    public int addBulk(@WebParam(name = "bulk") Bulk b, @WebParam(name = "subjectList") List<Subject> subs) {
         EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
         if (b.getId() != null) {
             if (em.find(Bulk.class, b.getId()) != null) {
@@ -655,6 +730,7 @@ public class ApplicationWebService {
         }
         em.getTransaction().begin();
         try {
+            b.setSubjectList(subs);
             em.persist(b);
             em.getTransaction().commit();
         } catch (Exception e) {
@@ -665,7 +741,7 @@ public class ApplicationWebService {
     }
 
     @WebMethod(operationName = "updateBulk")
-    public int updateBulk(@WebParam(name = "bulk") Bulk b) {
+    public int updateBulk(@WebParam(name = "bulk") Bulk b, @WebParam(name = "subjectList") List<Subject> subs) {
         EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
         if (b.getId() == null) {
             return 0;
@@ -679,7 +755,7 @@ public class ApplicationWebService {
             bu.setClazzList(b.getClazzList());
             bu.setInfo(b.getInfo());
             bu.setName(b.getName());
-            bu.setSubjectList(b.getSubjectList());
+            bu.setSubjectList(subs);
 
             em.getTransaction().commit();
         } catch (Exception e) {
@@ -691,6 +767,9 @@ public class ApplicationWebService {
 
     @WebMethod(operationName = "removeBulk")
     public int removeBulk(@WebParam(name = "id") int id) {
+        if (id == 1) {
+            return 0;
+        }
         EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
         Bulk bu = em.find(Bulk.class, id);
         if (bu == null) {
@@ -699,8 +778,16 @@ public class ApplicationWebService {
         EntityTransaction et = em.getTransaction();
         et.begin();
         try {
-            bu.getClazzList().clear();
-            bu.getSubjectList().clear();
+            for (Clazz c : bu.getClazzList()) {
+                c.setBulkId(new Bulk(1));
+            }
+            et.commit();
+        } catch (Exception ex) {
+            et.rollback();
+            return 0;
+        }
+        //et.begin();
+        try {
             em.remove(bu);
             et.commit();
         } catch (Exception e) {
@@ -719,13 +806,7 @@ public class ApplicationWebService {
      * @return Admin object
      */
     @WebMethod(operationName = "adminLogin")
-    public Admin adminLogin(@WebParam(name = "credential") String combination) {
-        String[] cre = combination.split("::", 2);
-        if (cre.length < 2) {
-            return null;
-        }
-        String user = cre[0];
-        String pass = cre[1].replace(":/:", "::");
+    public Admin adminLogin(@WebParam(name = "user") String user, @WebParam(name = "pass") String pass) {
         EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
         String storedPass = Encrypt.hash("VNrT" + user + "9Nr9=wes" + pass + "uw7@");
         System.out.println("User login decdential:\n\t" + user + "\n\t" + pass + "\n\t" + storedPass);
@@ -798,11 +879,16 @@ public class ApplicationWebService {
         if (a == null) {
             return 0;
         }
+
         em.getTransaction().begin();
         try {
             a.setLastChange(new Date().getTime());
-            String encPass = acc.getPass().replace("::", ":/:");
-            a.setPass(Encrypt.hash("VNrT" + acc.getId() + "9Nr9=wes" + encPass + "uw7@"));
+            String encPass = acc.getPass();
+            String hash = Encrypt.hash("VNrT" + acc.getId() + "9Nr9=wes" + encPass + "uw7@");
+            if (!hash.equals(encPass)) {
+                a.setPass(Encrypt.hash("VNrT" + acc.getId() + "9Nr9=wes" + encPass + "uw7@"));
+                a.setLastChange(new Date().getTime());
+            }
             a.setProhibited(acc.getProhibited());
 
             em.getTransaction().commit();
@@ -810,7 +896,6 @@ public class ApplicationWebService {
             em.getTransaction().rollback();
             return 0;
         }
-        System.out.println(a.getPass());
         return 1;
     }
 
@@ -927,5 +1012,8 @@ public class ApplicationWebService {
         return 1;
     }
     // </editor-fold>
-
+    
+    public static void main(String[] args) {
+        System.out.println(Encrypt.hash("VNrT" + "admin" + "9Nr9=wes" + "123" + "uw7@"));
+    }
 }

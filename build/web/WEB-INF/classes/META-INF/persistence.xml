@@ -14,10 +14,10 @@
     <class>com.marksmana.entities.Admin</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://localhost:1433;databaseName=KMA_QLDiem"/>
-      <property name="javax.persistence.jdbc.user" value="dbuser_kma_qldiem"/>
-      <property name="javax.persistence.jdbc.driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
-      <property name="javax.persistence.jdbc.password" value="jhdsf7.843fb%jaecbbU8DSTsRsd)zfdree"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://marksmanager.cemqqa00nibo.us-east-1.rds.amazonaws.com:3306/marksmanadb?zeroDateTimeBehavior=convertToNull&amp;useUnicode=true&amp;characterEncoding=UTF-8&amp;characterSetResults=utf8&amp;connectionCollation=utf8_unicode_ci"/>
+      <property name="javax.persistence.jdbc.user" value="dbuser"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.password" value="@kFu004o"/>
     </properties>
   </persistence-unit>
 </persistence>
