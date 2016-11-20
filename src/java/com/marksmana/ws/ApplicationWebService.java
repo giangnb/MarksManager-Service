@@ -388,6 +388,13 @@ public class ApplicationWebService {
                 .setParameter("subjectId", sj).getResultList();
     }
 
+    @WebMethod(operationName = "getScoresByStudent")
+    public List<Score> getScoresByStudent(@WebParam(name = "student") Student s) {
+        EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
+        return em.createNamedQuery("Score.findByStudent")
+                .setParameter("studentId", s).getResultList();
+    }
+
     @WebMethod(operationName = "getScoresBySubjectAndClass")
     public List<Score> getScoresBySubjectAndClass(@WebParam(name = "subject") Subject s, @WebParam(name = "clazz") Clazz c) {
         EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
@@ -477,11 +484,11 @@ public class ApplicationWebService {
     }
 
     @WebMethod(operationName = "removeScores")
-    public Score[] removeScores(@WebParam(name = "ids") int[] ids) {
+    public Score[] removeScores(@WebParam(name = "ids") Long[] ids) {
         EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
         EntityTransaction trans = em.getTransaction();
         ArrayList<Score> errors = new ArrayList<Score>();
-        for (int id : ids) {
+        for (Long id : ids) {
             Score score = em.find(Score.class, id);
             if (score != null) {
                 trans.begin();
@@ -495,6 +502,24 @@ public class ApplicationWebService {
             }
         }
         return errors.toArray(new Score[errors.size()]);
+    }
+
+    @WebMethod(operationName = "removeScore")
+    public int removeScore(@WebParam(name = "scoreId") Long id) {
+        EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
+        EntityTransaction trans = em.getTransaction();
+        Score score = em.find(Score.class, id);
+        if (score != null) {
+            trans.begin();
+            try {
+                em.remove(score);
+                trans.commit();
+                return 1;
+            } catch (Exception ex) {
+                trans.rollback();
+            }
+        }
+        return 0;
     }
     // </editor-fold>
 
@@ -1012,7 +1037,7 @@ public class ApplicationWebService {
         return 1;
     }
     // </editor-fold>
-    
+
     public static void main(String[] args) {
         System.out.println(Encrypt.hash("VNrT" + "admin" + "9Nr9=wes" + "123" + "uw7@"));
     }

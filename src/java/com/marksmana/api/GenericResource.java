@@ -99,7 +99,8 @@ public class GenericResource {
         EntityManager em = Persistence.createEntityManagerFactory("MarksManager-ServicePU").createEntityManager();
         Student s = em.find(Student.class, id);
         if (s==null) return null;
-        List<ScoreLog> logs = em.find(Student.class, id).getScoreLogList();
+        List<ScoreLog> logs = em.createNamedQuery("ScoreLog.findByStudent")
+                .setParameter("studentId", s).getResultList();
         return logs.toArray(new ScoreLog[logs.size()]);
     }
 

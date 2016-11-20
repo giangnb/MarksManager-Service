@@ -107,6 +107,10 @@
     <message name="getScoresBySubjectAndClassResponse"/>
     <message name="getClassesByTeacher"/>
     <message name="getClassesByTeacherResponse"/>
+    <message name="removeScore"/>
+    <message name="removeScoreResponse"/>
+    <message name="getScoresByStudent"/>
+    <message name="getScoresByStudentResponse"/>
     <portType name="ApplicationWebService">
         <operation name="getStudentById">
             <input message="tns:getStudentById"/>
@@ -312,6 +316,14 @@
             <input message="tns:getClassesByTeacher"/>
             <output message="tns:getClassesByTeacherResponse"/>
         </operation>
+        <operation name="removeScore">
+            <input message="tns:removeScore"/>
+            <output message="tns:removeScoreResponse"/>
+        </operation>
+        <operation name="getScoresByStudent">
+            <input message="tns:getScoresByStudent"/>
+            <output message="tns:getScoresByStudentResponse"/>
+        </operation>
     </portType>
     <binding name="ApplicationWebServicePortBinding" type="tns:ApplicationWebService">
         <operation name="getStudentById">
@@ -515,6 +527,14 @@
             <output/>
         </operation>
         <operation name="getClassesByTeacher">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="removeScore">
+            <input/>
+            <output/>
+        </operation>
+        <operation name="getScoresByStudent">
             <input/>
             <output/>
         </operation>
