@@ -217,9 +217,10 @@ public class ApplicationWebService {
                 } catch (Exception ex) {
                     // ignore
                 }
-            } else {
-                teacher.setInfo(t.getInfo());
                 teacher.setPass(pass);
+            } else {
+                // Password does not changed
+                teacher.setInfo(t.getInfo());
             }
             teacher.setScoreList(t.getScoreList());
             teacher.setSubjectList(t.getSubjectList());
